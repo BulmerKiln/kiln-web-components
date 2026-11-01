@@ -14,7 +14,7 @@ Kiln.
 
 ```bash
 yarn install
-yarn playwright install chromium   # once, for the story tests
+node_modules/.bin/playwright install chromium   # once, for the story tests
 yarn lint && yarn test && yarn build
 yarn dev                           # design's Storybook on http://localhost:6006
 yarn dev:ui                        # ui's Storybook
@@ -23,6 +23,14 @@ yarn demo                          # the demo app on http://localhost:5173
 
 This needs Node 24 or later. Yarn is checked in under `.yarn/releases`, so `corepack enable` or
 any Yarn 1 install runs the right version.
+
+## CI and releases
+
+Every pull request runs the same gate as above plus the Storybook build, CodeQL, Semgrep and the
+dependency review, through the shared workflows in
+[BulmerKiln/cicd](https://github.com/BulmerKiln/cicd). Publishing a GitHub release whose tag is the
+version (such as `1.4.0`) publishes `@bulmerkiln/design` and `@bulmerkiln/ui` to npmjs.org at that
+version, with provenance, once a reviewer approves the `release` environment.
 
 ## License
 

@@ -1,0 +1,6 @@
+# actionlint 1.7.12 doesn't know GitHub's ubuntu-26.04 runner yet, which every job here runs on.
+# It's GitHub-hosted, not self-hosted; listing it here only stops the unknown-label error. Remove
+# it once an actionlint release knows the label.
+self-hosted-runner:
+  labels:
+    - ubuntu-26.04

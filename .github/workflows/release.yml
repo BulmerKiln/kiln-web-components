@@ -1,0 +1,29 @@
+# Publishing a GitHub release whose tag is the version (such as 1.4.0) publishes @bulmerkiln/design
+# and @bulmerkiln/ui to npmjs.org, after a reviewer approves the release environment. Each package's
+# trusted publisher on npmjs.org names this file and the release environment.
+
+name: Release
+
+on:
+  release:
+    types: [published]
+
+permissions: {}
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Release
+    permissions:
+      actions: read
+      contents: write
+      id-token: write
+    uses: BulmerKiln/cicd/.github/workflows/node-release.yml@v1.1.0
+    with:
+      version: ${{ github.event.release.tag_name }}
+    secrets:
+      # Only for a package's first publish; npm's trusted publishing needs no token after that.
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

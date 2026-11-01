@@ -1,0 +1,52 @@
+# Every pull request and push to main: lint, the browser tests, the build and Storybook, CodeQL,
+# Semgrep and the dependency review. The workflows themselves live in BulmerKiln/cicd.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    # Weekly, so new CodeQL queries and advisories reach code that hasn't changed.
+    - cron: "23 6 * * 1"
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    name: Build
+    permissions:
+      contents: read
+    uses: BulmerKiln/cicd/.github/workflows/node-build.yml@v1.1.0
+
+  codeql:
+    name: CodeQL
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    uses: BulmerKiln/cicd/.github/workflows/codeql.yml@v1.1.0
+    with:
+      languages: '["javascript-typescript", "actions"]'
+
+  semgrep:
+    name: Semgrep
+    permissions:
+      contents: read
+      security-events: write
+    uses: BulmerKiln/cicd/.github/workflows/semgrep.yml@v1.1.0
+
+  dependencies:
+    name: Dependencies
+    if: github.event_name != 'schedule'
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: BulmerKiln/cicd/.github/workflows/dependencies.yml@v1.1.0
+    with:
+      gradle: false

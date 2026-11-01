@@ -167,7 +167,7 @@ yarn test     # every story in headless Chromium: play functions and axe-core
 yarn build    # type check, library build, packaging checks
 ```
 
-`yarn test` needs Playwright's Chromium (`yarn playwright install chromium`).
+`yarn test` needs Playwright's Chromium (`node_modules/.bin/playwright install chromium` from the workspace root).
 
 ## Standards and references
 
