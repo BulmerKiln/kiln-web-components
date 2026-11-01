@@ -1,0 +1,257 @@
+/*
+ * Copyright The Bulmer Kiln Authors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@import "tailwindcss";
+
+/* This file ships as source and the consuming app's Tailwind build compiles
+   it. Tailwind's automatic source detection skips node_modules, so this points
+   it at the package's own components, icons and the class maps in utils/,
+   relative to this file: from dist/theme.css the compiled .js, from
+   src/theme.css (other workspaces, which resolve this package from source) the
+   .ts and .tsx. */
+@source "./components/**/*.{js,tsx}";
+@source "./icons/**/*.{js,tsx}";
+@source "./utils/**/*.{js,ts}";
+
+/* ── Variants ──────────────────────────────────────────────────────────────
+   Each follows the operating system's preference unless an attribute on <html>
+   overrides it. Use these, never Tailwind's media-only motion-reduce: or
+   contrast-more:. */
+
+/* data-theme="dark" or "light" on <html>, or on any ancestor, overrides
+   prefers-color-scheme. */
+@custom-variant dark {
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(:not([data-theme="light"], [data-theme="light"] *)) {
+      @slot;
+    }
+  }
+}
+
+@custom-variant reduce-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @slot;
+  }
+  &:where([data-motion="reduce"], [data-motion="reduce"] *) {
+    @slot;
+  }
+}
+
+@custom-variant more-contrast {
+  @media (prefers-contrast: more) {
+    @slot;
+  }
+  &:where([data-contrast="more"], [data-contrast="more"] *) {
+    @slot;
+  }
+}
+
+/* ── Fonts ─────────────────────────────────────────────────────────────────
+   Geist for text, Fira Code for code, digests and identifiers; both variable
+   and under the SIL Open Font License (fonts/<family>/OFL.txt). */
+@font-face {
+  font-family: "Geist";
+  src: url("./fonts/Geist/Geist-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist";
+  src: url("./fonts/Geist/Geist-Italic-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fira Code";
+  src: url("./fonts/FiraCode/FiraCode-Variable.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Color ─────────────────────────────────────────────────────────────────
+   Literal scales only, no semantic aliases: components name the shade they
+   render (bg-brand-700 dark:bg-brand-300), so contrast can be checked where a
+   color is used. Errors use brick-*, success celadon-*. */
+@theme {
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* An indeterminate ProgressBar: a segment sweeping across its track. */
+  --animate-progress-sweep: progress-sweep 1.4s ease-in-out infinite;
+  @keyframes progress-sweep {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(250%);
+    }
+  }
+
+  /* Brand: soft purple (hue 302 → 291) */
+  --color-brand-50: oklch(97.5% 0.014 302);
+  --color-brand-100: oklch(90.3% 0.034 301);
+  --color-brand-200: oklch(83.1% 0.065 300);
+  --color-brand-300: oklch(75.9% 0.115 299); /* dark-theme primary */
+  --color-brand-400: oklch(68.7% 0.155 298);
+  --color-brand-500: oklch(61.5% 0.185 296);
+  --color-brand-600: oklch(54.3% 0.195 295);
+  --color-brand-700: oklch(47.1% 0.185 294); /* light-theme primary */
+  --color-brand-800: oklch(39.9% 0.158 293);
+  --color-brand-900: oklch(32.7% 0.125 292);
+  --color-brand-950: oklch(25.5% 0.095 291);
+
+  /* Accent: yellow (hue 97 → 56) */
+  --color-accent-50: oklch(97.5% 0.035 97);
+  --color-accent-100: oklch(90.3% 0.085 93);
+  --color-accent-200: oklch(83.1% 0.16 89); /* flame on dark */
+  --color-accent-300: oklch(75.9% 0.155 85);
+  --color-accent-400: oklch(68.7% 0.142 81);
+  --color-accent-500: oklch(61.5% 0.129 76);
+  --color-accent-600: oklch(54.3% 0.116 72);
+  --color-accent-700: oklch(47.1% 0.103 68);
+  --color-accent-800: oklch(39.9% 0.09 64);
+  --color-accent-900: oklch(32.7% 0.074 60);
+  --color-accent-950: oklch(25.5% 0.056 56);
+
+  /* Brick: the red for errors and destructive actions, in place of
+     Tailwind's red-*. The brand scale's lightness at each stop, so a stop has
+     its brand twin's contrast; all inside sRGB. */
+  --color-red-*: initial;
+  --color-brick-50: oklch(97.5% 0.012 22);
+  --color-brick-100: oklch(90.3% 0.04 22);
+  --color-brick-200: oklch(83.1% 0.076 23);
+  --color-brick-300: oklch(75.9% 0.118 24);
+  --color-brick-400: oklch(68.7% 0.151 25);
+  --color-brick-500: oklch(61.5% 0.174 26);
+  --color-brick-600: oklch(54.3% 0.18 27);
+  --color-brick-700: oklch(47.1% 0.168 27);
+  --color-brick-800: oklch(39.9% 0.143 27);
+  --color-brick-900: oklch(32.7% 0.112 26);
+  --color-brick-950: oklch(25.5% 0.081 25);
+
+  /* Celadon: the green for success, after the kiln glaze, in place of
+     Tailwind's green-*. Brand's lightness at each stop, like brick; all inside
+     sRGB. */
+  --color-green-*: initial;
+  --color-celadon-50: oklch(97.5% 0.014 160);
+  --color-celadon-100: oklch(90.3% 0.038 160);
+  --color-celadon-200: oklch(83.1% 0.07 159);
+  --color-celadon-300: oklch(75.9% 0.1 158);
+  --color-celadon-400: oklch(68.7% 0.122 157);
+  --color-celadon-500: oklch(61.5% 0.132 156);
+  --color-celadon-600: oklch(54.3% 0.128 156);
+  --color-celadon-700: oklch(47.1% 0.11 157);
+  --color-celadon-800: oklch(39.9% 0.093 158);
+  --color-celadon-900: oklch(32.7% 0.078 159);
+  --color-celadon-950: oklch(25.5% 0.058 160);
+
+  /* Ash: the neutral for text, borders and surfaces, tinted towards the brand
+     hue. Light theme: text 900, secondary 700, borders 600, dividers 200 on
+     white. Dark theme: text 100, secondary 400, borders 500, dividers 800,
+     raised surfaces 900 on 950. */
+  --color-ash-50: oklch(98.5% 0.006 300);
+  --color-ash-100: oklch(95.1% 0.021 301);
+  --color-ash-200: oklch(90.6% 0.028 302);
+  --color-ash-300: oklch(84% 0.04 300);
+  --color-ash-400: oklch(77.1% 0.049 300);
+  --color-ash-500: oklch(63.4% 0.06 297);
+  --color-ash-600: oklch(52.8% 0.059 298);
+  --color-ash-700: oklch(42.4% 0.06 298);
+  --color-ash-800: oklch(31.2% 0.057 297);
+  --color-ash-900: oklch(22.7% 0.055 294);
+  --color-ash-950: oklch(18.7% 0.031 299); /* dark-theme page */
+}
+
+@layer base {
+  /* Tailwind's preflight gives buttons the default cursor. Everything that
+     acts on a click gets the pointer back here, native or by ARIA role, and
+     anything disabled shows not-allowed; :where() keeps both overridable by a
+     single utility. Links keep the browser's own pointer. */
+  :where(
+    button,
+    select,
+    summary,
+    label[for],
+    input:is(
+      [type="button"],
+      [type="submit"],
+      [type="reset"],
+      [type="checkbox"],
+      [type="radio"],
+      [type="file"],
+      [type="color"],
+      [type="range"]
+    ),
+    [role="button"],
+    [role="link"],
+    [role="tab"],
+    [role="switch"],
+    [role="checkbox"],
+    [role="radio"],
+    [role="option"],
+    [role="menuitem"],
+    [role="menuitemcheckbox"],
+    [role="menuitemradio"],
+    [role="treeitem"]
+  ) {
+    cursor: pointer;
+  }
+  :where(:disabled, [aria-disabled="true"], [aria-disabled="true"] *) {
+    cursor: not-allowed;
+  }
+
+  html {
+    color-scheme: light;
+    background-color: var(--color-white);
+    color: var(--color-ash-900);
+
+    @variant dark {
+      color-scheme: dark;
+      background-color: var(--color-ash-950);
+      color: var(--color-ash-100);
+    }
+  }
+}
+
+/* ── Accessibility preferences ─────────────────────────────────────────────
+   Set on <html> by the app (and by Storybook's toolbar). */
+
+/* Percentages keep the browser's own text-size setting as the base. */
+html[data-text-size="large"] {
+  font-size: 112.5%;
+}
+html[data-text-size="larger"] {
+  font-size: 125%;
+}
+
+/* Covers every transition, so components need no per-class opt-in. */
+html[data-motion="reduce"],
+html[data-motion="reduce"] *,
+html[data-motion="reduce"] *::before,
+html[data-motion="reduce"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+*:focus-visible {
+  @variant more-contrast {
+    outline-width: 3px;
+  }
+}
+
+/* WCAG 1.4.12 text spacing; !important beats per-element leading and tracking utilities. */
+html[data-text-spacing="wide"] * {
+  line-height: 1.5 !important;
+  letter-spacing: 0.12em !important;
+  word-spacing: 0.16em !important;
+}

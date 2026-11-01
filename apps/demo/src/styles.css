@@ -1,0 +1,4 @@
+/* The app's stylesheet, as a real Kiln web app writes it: the design theme
+   (which imports Tailwind), then the ui package's sources. */
+@import "@bulmerkiln/design/theme.css";
+@import "@bulmerkiln/ui/styles.css";

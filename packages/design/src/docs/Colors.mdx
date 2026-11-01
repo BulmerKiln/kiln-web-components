@@ -1,0 +1,50 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundations/Colors" />
+
+# Colors
+
+Five literal scales, each `50`–`950`, defined in `theme.css`. Components name the shade they
+render (`bg-brand-700 dark:bg-brand-300`); there are no semantic aliases such as `primary`.
+Tailwind's own `red-*` and `green-*` are removed: errors use `brick`, success `celadon`.
+
+| Scale    | Role                                   | Light theme (on white)                  | Dark theme (on `ash-950`)               |
+| -------- | -------------------------------------- | --------------------------------------- | --------------------------------------- |
+| `brand`  | Primary actions, links, focus outlines | `brand-700`, hover `brand-800`          | `brand-300`, hover `brand-200`          |
+| `accent` | The flame, highlights                  | `accent-700` text                       | `accent-200`                            |
+| `brick`  | Errors and destructive actions         | `brick-700`, hover `brick-800`          | `brick-700` fill, hover `brick-600`; `brick-400` text |
+| `celadon` | Success                               | `celadon-700` icons, `celadon-800` on its tint | `celadon-300` icons, `celadon-200` on its tint |
+| `ash`    | Text, borders and surfaces             | text `ash-900`, secondary `ash-700`, borders `ash-600`, dividers `ash-200` | text `ash-100`, secondary `ash-400`, borders `ash-500`, dividers `ash-800`, raised `ash-900` |
+
+export const stops = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+
+export const Scale = ({ name }) => (
+  <div style={{ display: "grid", gridTemplateColumns: "repeat(11, 1fr)", gap: 4, marginBottom: 16 }}>
+    {stops.map((stop) => (
+      <div key={stop} style={{ fontSize: 12 }}>
+        <div style={{ height: 48, borderRadius: 6, background: `var(--color-${name}-${stop})` }} />
+        {name}-{stop}
+      </div>
+    ))}
+  </div>
+);
+
+## Brand
+
+<Scale name="brand" />
+
+## Accent
+
+<Scale name="accent" />
+
+## Brick
+
+<Scale name="brick" />
+
+## Celadon
+
+<Scale name="celadon" />
+
+## Ash
+
+<Scale name="ash" />

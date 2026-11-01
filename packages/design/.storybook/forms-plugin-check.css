@@ -1,0 +1,6 @@
+/* Storybook only: never shipped (postbuild-copy-theme.mjs copies only
+   src/theme.css). Apps often pair Tailwind with @tailwindcss/forms, whose base
+   styles restyle every native <input>, <select> and <textarea>, focus rings
+   included. Loading it here shows that regression in Storybook rather than
+   only in a consuming app. */
+@plugin "@tailwindcss/forms";

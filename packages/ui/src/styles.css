@@ -1,0 +1,11 @@
+/*
+ * Copyright The Bulmer Kiln Authors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* Import after @bulmerkiln/design/theme.css. It points the app's Tailwind
+   build at this package's components (it skips node_modules on its own):
+   the compiled .js from dist/, the .ts and .tsx from src/ inside this workspace.
+   utils/ holds class maps shared by several components (rich text's). */
+@source "./components/**/*.{js,tsx}";
+@source "./utils/**/*.{js,ts}";

@@ -1,0 +1,22 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundations/Typography" />
+
+# Typography
+
+Two variable fonts, both under the SIL Open Font License and shipped with `theme.css`:
+
+| Family    | Utility     | Weights | Use                                         |
+| --------- | ----------- | ------- | ------------------------------------------- |
+| Geist     | `font-sans` | 100–900 | Everything, including the wordmark (600)    |
+| Fira Code | `font-mono` | 300–700 | Code, digests, tags, versions, identifiers  |
+
+<p style={{ fontFamily: "var(--font-sans)", fontSize: 32, fontWeight: 600, margin: "24px 0 8px" }}>
+  Every artifact, verified on the way in.
+</p>
+<p style={{ fontFamily: "var(--font-sans)", fontSize: 16 }}>
+  Pull through the proxy, and Kiln checks signatures and provenance before anything reaches a build.
+</p>
+<p style={{ fontFamily: "var(--font-mono)", fontSize: 14 }}>
+  ghcr.io/acme/api@sha256:9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08
+</p>

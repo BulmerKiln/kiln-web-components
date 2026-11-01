@@ -1,0 +1,4 @@
+/* Storybook only: the design theme (from source, so its @source lines find
+   design's .tsx components) and this package's own components. */
+@import "../../design/src/theme.css";
+@import "../src/styles.css";

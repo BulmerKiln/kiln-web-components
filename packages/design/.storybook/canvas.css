@@ -1,0 +1,17 @@
+/* Storybook only. In a docs page several stories share one <html>, so each
+   story's theme goes on its own wrapper (preview.tsx) and the story block
+   around it follows that wrapper, or the operating system without one. */
+@reference "../src/theme.css";
+
+.docs-story {
+  @apply bg-white dark:bg-ash-950;
+}
+.docs-story:has([data-theme="dark"]) {
+  @apply bg-ash-950;
+}
+.docs-story:has([data-theme="light"]) {
+  @apply bg-white;
+}
+.kiln-story-theme {
+  @apply text-ash-900 dark:text-ash-100;
+}

@@ -1,0 +1,22 @@
+{
+  "name": "kiln-web-components",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "yarn workspace @bulmerkiln/design dev",
+    "dev:ui": "yarn workspace @bulmerkiln/ui dev",
+    "demo": "yarn workspace @bulmerkiln/demo dev",
+    "build": "yarn workspaces foreach -At run build",
+    "lint": "yarn workspaces foreach -At run lint",
+    "test": "yarn workspaces foreach -At run test",
+    "build-storybook": "yarn workspaces foreach -At run build-storybook"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "yarn@4.18.0"
+}

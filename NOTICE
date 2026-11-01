@@ -1,0 +1,7 @@
+Bulmer Kiln
+Copyright The Bulmer Kiln Authors
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+@bulmerkiln/design bundles the Geist and Fira Code fonts, licensed under the SIL Open Font
+License, Version 1.1 (see packages/design/src/fonts/<family>/OFL.txt).
